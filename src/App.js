@@ -1,25 +1,41 @@
-// import './App.css';
+import './App.css';
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import logo from './logo.svg';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import Select from 'react-select';
+import Header from './Header';
 
 function App() {
+  const [imgData, setImgData] = useState([]);
+
+  //fetch Data from API
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await axios('https://api.memegen.link/templates/');
+        const img = await result.json();
+        setImgData(img);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header />
+      {/** Select images */}
+      <div>
+        <select>
+          {imgData.map((option) => (
+            <option key={option.id} value={option.id}>
+              {option.name}
+            </option>
+          ))}
+        </select>
+      </div>
     </div>
   );
 }
