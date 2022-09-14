@@ -10,14 +10,16 @@ function App() {
   const [imgData, setImgData] = useState([]);
 
   //fetch Data from API
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await axios('https://api.memegen.link/templates/');
-        const img = await result.json();
-        setImgData(img);
-      } catch (error) {
-        console.log(error);
+        const result = await fetch('https://api.memegen.link/templates/');
+        const json = await result.json();
+        setImgData(json);
+      } catch (err) {
+        throw err;
+        console.log(err);
       }
     };
     fetchData();
@@ -26,15 +28,26 @@ function App() {
   return (
     <div>
       <Header />
+      {/**  */}
       {/** Select images */}
       <div>
-        <select>
-          {imgData.map((option) => (
-            <option key={option.id} value={option.id}>
-              {option.name}
-            </option>
-          ))}
-        </select>
+        <label>
+          <span>Choose picture</span>
+          <select
+            id="image"
+            value={imgData}
+            onChange={(event) => {
+              setImgData(event.currentTarget.value);
+              console.log(event.currentTarget.value);
+            }}
+          >
+            {imgData.map((option) => (
+              <option key={option.id} value={option.id}>
+                {option.name}
+              </option>
+            ))}
+          </select>
+        </label>
       </div>
     </div>
   );
