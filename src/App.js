@@ -29,10 +29,21 @@ const button = css`
   font-size: 16px;
 `;
 
+const imageDiv = css`
+  background-color: rgb(193, 190, 190);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 function App() {
   const [imgData, setImgData] = useState([]);
   const [topText, setTopText] = useState();
   const [bottomText, setBottomText] = useState();
+  const [userTemplate, setUserTemplate] = useState();
+  const [meme, setMeme] = useState(
+    `https://api.memegen.link/images/noidea/i_have_no_idea/what_i'm_doing.png`,
+  );
 
   //fetch Data from API
 
@@ -50,6 +61,27 @@ function App() {
     fetchData();
   }, []);
 
+  const download = (e) => {
+    console.log(e.target.href);
+    fetch(e.target.href, {
+      method: 'GET',
+      headers: {},
+    })
+      .then((response) => {
+        response.arrayBuffer().then(function (buffer) {
+          const url = window.URL.createObjectURL(new Blob([buffer]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', { meme });
+          document.body.appendChild(link);
+          link.click();
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div>
       <Header />
@@ -62,7 +94,7 @@ function App() {
         >
           {/** Input Top text */}
           <label>
-            <span>Top text</span>
+            Top text
             <input
               value={topText}
               onChange={(event) => {
@@ -74,7 +106,7 @@ function App() {
           <br />
           {/** Input Top text */}
           <label>
-            <span>Bottom text</span>
+            Bottom text
             <input
               value={bottomText}
               onChange={(event) => {
@@ -85,13 +117,13 @@ function App() {
           <br />
           <br />
           {/** Select images */}
-          <label>
-            <span>Choose picture</span>
+          <label htmlFor="user-template">
+            Meme template
             <select
-              id="image"
-              value={imgData}
+              id="user-template"
+              value={userTemplate}
               onChange={(event) => {
-                setImgData(event.currentTarget.value);
+                setUserTemplate(event.currentTarget.value);
                 console.log(event.currentTarget.value);
               }}
             >
@@ -105,16 +137,33 @@ function App() {
           <br />
           <br />
           {/** Button Generate Meme */}
-          <button css={button}>Generate Meme</button>
+          <button
+            css={button}
+            onClick={() =>
+              setMeme(
+                `https://api.memegen.link/images/${userTemplate}/${topText}/${bottomText}.png`,
+              )
+            }
+          >
+            Generate Meme
+          </button>
           {/** Button Download */}
-          <button css={button}>Download</button>
+          <button css={button} onClick={(e) => download(e)}>
+            Download
+          </button>
           <br />
         </form>
       </div>
-      <div>
-        <img src={setImgData} alt="" />
-        <h2>{setTopText}</h2>
-        <h2>{setBottomText}</h2>
+      <div css={imageDiv}>
+        <img
+          data-test-id="meme-image"
+          src={meme}
+          alt=""
+          style={{
+            maxWidth: '400px',
+            maxHeight: 'auto',
+          }}
+        />
       </div>
     </div>
   );
