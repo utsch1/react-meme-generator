@@ -11,6 +11,10 @@ const background = css`
   margin: 0;
   padding: 0;
   position: absolute;
+
+  @media screen and (max-width: 400px) {
+    background-color: #006b8f;
+  }
 `;
 
 const divLayout = css`
@@ -22,6 +26,10 @@ const divLayout = css`
   flex-flow: column;
   justify-content: flex-start;
   align-items: center;
+
+  @media (max-width: 400px) {
+    width: 400px;
+  }
 `;
 
 const headline = css`
@@ -83,7 +91,6 @@ function App() {
         setImgData(json);
       } catch (err) {
         throw err;
-        console.log(err);
       }
     };
     fetchData();
