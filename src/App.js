@@ -71,7 +71,7 @@ function App() {
   const [meme, setMeme] = useState(
     `https://api.memegen.link/images/noidea.png`,
   );
-  const [item, setItem] = useState([]);
+  // const [item, setItem] = useState([]);
 
   //fetch Data from API
 
