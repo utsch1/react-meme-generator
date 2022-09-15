@@ -22,7 +22,7 @@ const button = css`
   font-weight: bold;
   color: yellow;
   border-radius: 10px;
-  background-color: red;
+  background-color: #00003f;
   width: 300px;
   height: 50px;
   font-size: 16px;
@@ -41,8 +41,9 @@ function App() {
   const [bottomText, setBottomText] = useState();
   const [userTemplate, setUserTemplate] = useState();
   const [meme, setMeme] = useState(
-    `https://api.memegen.link/images/noidea/i_have_no_idea/what_i'm_doing.png`,
+    `https://api.memegen.link/images/noidea.png`,
   );
+  const [item, setItem] = useState([]);
 
   //fetch Data from API
 
@@ -116,6 +117,7 @@ function App() {
           <br />
           {/** Button Generate Meme */}
           <button
+            data-test-id="generate-meme"
             css={button}
             onClick={() =>
               setMeme(
@@ -127,6 +129,7 @@ function App() {
           </button>
           {/** Button Download */}
           <button
+            css={button}
             onClick={() => {
               FileSaver.saveAs(`${meme}`, `${meme}`);
             }}
@@ -135,6 +138,7 @@ function App() {
           </button>
         </form>
       </div>
+      {/** Generated Meme Image */}
       <div css={imageDiv}>
         <img
           data-test-id="meme-image"
@@ -146,6 +150,18 @@ function App() {
           }}
         />
       </div>
+
+      {/**Local Storage */}
+      useEffect(() => {
+        localStorage.setItem('items', JSON.stringigy(meme), [items])
+      })
+
+      useEffect(() => {
+        const items = JSON.parse(localStorage.getItem('items'));
+        if (items) {
+        setItems(items)
+        }
+        }, []);
     </div>
   );
 }
