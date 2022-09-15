@@ -1,9 +1,8 @@
 import './App.css';
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import axios from 'axios';
+import FileSaver from 'file-saver';
 import { useEffect, useState } from 'react';
-import Select from 'react-select';
 import Header from './Header';
 
 const form = css`
@@ -23,7 +22,7 @@ const button = css`
   font-weight: bold;
   color: yellow;
   border-radius: 10px;
-  background-color: #00003f;
+  background-color: red;
   width: 300px;
   height: 50px;
   font-size: 16px;
@@ -60,27 +59,6 @@ function App() {
     };
     fetchData();
   }, []);
-
-  const download = (e) => {
-    console.log(e.target.href);
-    fetch(e.target.href, {
-      method: 'GET',
-      headers: {},
-    })
-      .then((response) => {
-        response.arrayBuffer().then(function (buffer) {
-          const url = window.URL.createObjectURL(new Blob([buffer]));
-          const link = document.createElement('a');
-          link.href = url;
-          link.setAttribute('download', { meme });
-          document.body.appendChild(link);
-          link.click();
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   return (
     <div>
@@ -148,10 +126,13 @@ function App() {
             Generate Meme
           </button>
           {/** Button Download */}
-          <button css={button} onClick={(e) => download(e)}>
+          <button
+            onClick={() => {
+              FileSaver.saveAs(`${meme}`, `${meme}`);
+            }}
+          >
             Download
           </button>
-          <br />
         </form>
       </div>
       <div css={imageDiv}>
