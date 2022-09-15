@@ -3,36 +3,64 @@ import './App.css';
 import { css } from '@emotion/react';
 import FileSaver from 'file-saver';
 import { useEffect, useState } from 'react';
-import Header from './Header';
 
-const form = css`
-  align-items: center;
-  justify-content: center;
-  font-family: 'Space Mono', monospace;
-  font-weight: bold;
-  background-color: rgb(193, 190, 190);
-  margin-top: 0 auto;
+const background = css`
+  background-color: #006b8f;
+  width: 100%;
+  height: 1000px;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+`;
+
+const divLayout = css`
+  width: 70%;
+  height: 1000px;
+  background-color: #d9e5d6;
+  margin: 0 auto;
   display: flex;
-  padding-top: 10px;
-  height: 250px;
+  flex-flow: column;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
+const headline = css`
+  font-size: 56px;
+  color: #ff9b42;
+  font-weight: bold;
+  text-shadow: 3px 3px coral;
+`;
+
+const label = css`
+  font-weight: bold;
+  color: #006b8f;
+`;
+const inputField = css`
+  width: 100%;
+  border: 2px solid #ff9b42;
+  box-shadow: 1px 1px coral;
+  color: #006b8f;
 `;
 
 const button = css`
-  font-family: 'Space Mono', monospace;
   font-weight: bold;
-  color: yellow;
-  border-radius: 10px;
-  background-color: #00003f;
-  width: 300px;
+  font-size: 18px;
+  color: #006b8f;
+  background-color: #ff9b42;
+  width: 250px;
   height: 50px;
-  font-size: 16px;
+  border-radius: 30px;
+  border: 0;
+
+  :hover {
+    box-shadow: 0 5px 15px coral;
+  }
 `;
 
-const imageDiv = css`
-  background-color: rgb(193, 190, 190);
+const buttonDiv = css`
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-flow: row;
+  justify-content: space-around;
 `;
 
 function App() {
@@ -62,97 +90,104 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <Header />
-
-      <div css={form}>
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-          }}
-        >
-          {/** Input Top text */}
-          <label>
-            Top text
-            <input
-              value={topText}
-              onChange={(event) => {
-                setTopText(event.currentTarget.value);
-              }}
-            />
-          </label>
-          <br />
-          <br />
-          {/** Input Top text */}
-          <label>
-            Bottom text
-            <input
-              value={bottomText}
-              onChange={(event) => {
-                setBottomText(event.currentTarget.value);
-              }}
-            />
-          </label>
-          <br />
-          <br />
-          {/** Select images */}
-          <label htmlFor="user-template">
-            Meme template
-            <select
-              id="user-template"
-              value={userTemplate}
-              onChange={(event) => {
-                setUserTemplate(event.currentTarget.value);
-                console.log(event.currentTarget.value);
-              }}
-            >
-              {imgData.map((option) => (
-                <option key={option.id} value={option.id}>
-                  {option.name}
-                </option>
-              ))}
-            </select>
-          </label>
-          <br />
-          <br />
-          {/** Button Generate Meme */}
-          <button
-            data-test-id="generate-meme"
-            css={button}
-            onClick={() =>
-              setMeme(
-                `https://api.memegen.link/images/${userTemplate}/${topText}/${bottomText}.png`,
-              )
-            }
-          >
-            Generate Meme
-          </button>
-          {/** Button Download */}
-          <button
-            css={button}
-            onClick={() => {
-              FileSaver.saveAs(`${meme}`, `${meme}`);
+    <div css={background}>
+      <div css={divLayout}>
+        <h1 css={headline}>MEME GENERATOR</h1>
+        <div>
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
             }}
           >
-            Download
-          </button>
-        </form>
-      </div>
-      {/** Generated Meme Image */}
-      <div css={imageDiv}>
-        <img
-          data-test-id="meme-image"
-          src={meme}
-          alt=""
-          style={{
-            maxWidth: '400px',
-            maxHeight: 'auto',
-          }}
-        />
-      </div>
+            {/** Input Top text */}
+            <label htmlFor="top-text" css={label}>
+              Top text
+              <input
+                css={inputField}
+                value={topText}
+                onChange={(event) => {
+                  setTopText(event.currentTarget.value);
+                }}
+              />
+            </label>
+            <br />
+            <br />
+            {/** Input Top text */}
+            <label htmlFor="bottom-text" css={label}>
+              Bottom text
+              <input
+                css={inputField}
+                value={bottomText}
+                onChange={(event) => {
+                  setBottomText(event.currentTarget.value);
+                }}
+              />
+            </label>
+            <br />
+            <br />
+            {/** Select images */}
+            <label htmlFor="user-template" css={label}>
+              Meme template
+              <select
+                css={inputField}
+                id="user-template"
+                value={userTemplate}
+                onChange={(event) => {
+                  setUserTemplate(event.currentTarget.value);
+                  console.log(event.currentTarget.value);
+                }}
+              >
+                <option>--Choose meme template--</option>
+                {imgData.map((option) => (
+                  <option key={option.id} value={option.id}>
+                    {option.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <br />
+            <br />
+            {/** Button Generate Meme */}
+            <div css={buttonDiv}>
+              <button
+                data-test-id="generate-meme"
+                css={button}
+                onClick={() =>
+                  setMeme(
+                    `https://api.memegen.link/images/${userTemplate}/${topText}/${bottomText}.png`,
+                  )
+                }
+              >
+                Generate Meme
+              </button>
+              {/** Button Download */}
+              <button
+                css={button}
+                onClick={() => {
+                  FileSaver.saveAs(`${meme}`, `${meme}`);
+                }}
+              >
+                Download
+              </button>
+            </div>
+          </form>
+        </div>
+        <br />
+        {/** Generated Meme Image */}
+        <div>
+          <img
+            data-test-id="meme-image"
+            src={meme}
+            alt=""
+            style={{
+              maxWidth: '400px',
+              maxHeight: 'auto',
+            }}
+          />
+        </div>
 
-      {/**Local Storage */}
-      useEffect(() => {
+        {/**Local Storage */}
+        {/* useEffect(() => {
         localStorage.setItem('items', JSON.stringigy(meme), [items])
       })
 
@@ -161,7 +196,8 @@ function App() {
         if (items) {
         setItems(items)
         }
-        }, []);
+        }, []); */}
+      </div>
     </div>
   );
 }
