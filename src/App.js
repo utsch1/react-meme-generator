@@ -101,7 +101,7 @@ function App() {
           >
             {/** Input Top text */}
             <label htmlFor="topText" css={label}>
-              Top text{' '}
+              Top text
             </label>
             <input
               id="topText"
