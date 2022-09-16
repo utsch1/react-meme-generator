@@ -69,10 +69,21 @@ function App() {
   const [imgData, setImgData] = useState([]);
   const [topText, setTopText] = useState();
   const [bottomText, setBottomText] = useState();
-  const [userTemplate, setUserTemplate] = useState();
+  const [userTemplate, setUserTemplate] = useState('success');
   const [meme, setMeme] = useState(
-    `https://api.memegen.link/images/noidea.png`,
+    `https://api.memegen.link/images/${userTemplate}/Hi/there.png`,
   );
+
+  function cleanInput(input) {
+    let specialCharacters = input.replaceAll('?', '~q');
+    specialCharacters = specialCharacters.replaceAll('&', '~a');
+    specialCharacters = specialCharacters.replaceAll('%', '~p');
+    specialCharacters = specialCharacters.replaceAll(' ', '_');
+    specialCharacters = specialCharacters.replaceAll('#', '~h');
+    specialCharacters = specialCharacters.replaceAll('/', '~s');
+    specialCharacters = specialCharacters.replaceAll('&20', '_');
+    return specialCharacters;
+  }
 
   // fetch Data from API
 
@@ -156,7 +167,9 @@ function App() {
                 css={button}
                 onClick={() =>
                   setMeme(
-                    `https://api.memegen.link/images/${userTemplate}/${topText}/${bottomText}.png`,
+                    `https://api.memegen.link/images/${cleanInput(
+                      userTemplate,
+                    )}/${cleanInput(topText)}/${cleanInput(bottomText)}.png`,
                   )
                 }
               >
