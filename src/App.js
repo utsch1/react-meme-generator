@@ -81,7 +81,7 @@ function App() {
     specialCharacters = specialCharacters.replaceAll(' ', '_');
     specialCharacters = specialCharacters.replaceAll('#', '~h');
     specialCharacters = specialCharacters.replaceAll('/', '~s');
-    specialCharacters = specialCharacters.replaceAll('&20', '_');
+    specialCharacters = specialCharacters.replaceAll('%20', '_');
     return specialCharacters;
   }
 
