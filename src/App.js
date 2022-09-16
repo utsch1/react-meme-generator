@@ -36,6 +36,7 @@ const label = css`
   font-weight: bold;
   color: #006b8f;
 `;
+
 const inputField = css`
   width: 100%;
   border: 2px solid #ff9b42;
@@ -99,29 +100,31 @@ function App() {
             }}
           >
             {/** Input Top text */}
-            <label htmlFor="top-text" css={label}>
-              Top text
-              <input
-                css={inputField}
-                value={topText}
-                onChange={(event) => {
-                  setTopText(event.currentTarget.value);
-                }}
-              />
+            <label htmlFor="topText" css={label}>
+              Top text{' '}
             </label>
+            <input
+              id="topText"
+              css={inputField}
+              value={topText}
+              onChange={(event) => {
+                setTopText(event.currentTarget.value);
+              }}
+            />
             <br />
             <br />
             {/** Input Top text */}
-            <label htmlFor="bottom-text" css={label}>
+            <label htmlFor="bottomText" css={label}>
               Bottom text
-              <input
-                css={inputField}
-                value={bottomText}
-                onChange={(event) => {
-                  setBottomText(event.currentTarget.value);
-                }}
-              />
             </label>
+            <input
+              id="bottomText"
+              css={inputField}
+              value={bottomText}
+              onChange={(event) => {
+                setBottomText(event.currentTarget.value);
+              }}
+            />
             <br />
             <br />
             {/** Select images */}
