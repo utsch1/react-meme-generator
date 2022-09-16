@@ -99,7 +99,7 @@ function App() {
         throw err;
       }
     };
-    fetchData();
+    fetchData().catch((err) => console.log(err));
   }, []);
 
   return (
