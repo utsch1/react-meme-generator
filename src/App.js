@@ -67,8 +67,8 @@ const buttonDiv = css`
 
 function App() {
   const [imgData, setImgData] = useState([]);
-  const [topText, setTopText] = useState();
-  const [bottomText, setBottomText] = useState();
+  const [topText, setTopText] = useState('');
+  const [bottomText, setBottomText] = useState('');
   const [userTemplate, setUserTemplate] = useState('success');
   const [meme, setMeme] = useState(
     `https://api.memegen.link/images/${userTemplate}/Hi/there.png`,
