@@ -11,10 +11,19 @@ const background = css`
   margin: 0;
   padding: 0;
   position: absolute;
-
+  z-index: 0;
   @media screen and (max-width: 400px) {
-    background-color: #006b8f;
+    background-color: #d9e5d6;
   }
+`;
+
+const backgroundText = css`
+  position: absolute;
+  z-index: 1;
+  font-weight: bold;
+  font-size: 30px;
+  color: #d9e5d6;
+  text-shadow: 2px 2px coral;
 `;
 
 const divLayout = css`
@@ -26,6 +35,8 @@ const divLayout = css`
   flex-flow: column;
   justify-content: flex-start;
   align-items: center;
+  position: relative;
+  z-index: 2;
 
   @media (max-width: 400px) {
     width: 400px;
@@ -98,6 +109,7 @@ function App() {
 
   return (
     <div css={background}>
+      <p css={backgroundText}>{'meme '.repeat(240)}</p>
       <div css={divLayout}>
         <h1 css={headline}>MEME GENERATOR</h1>
         <div>
@@ -171,7 +183,7 @@ function App() {
               <button
                 css={button}
                 onClick={() => {
-                  FileSaver.saveAs(`${meme}`, `${meme}`);
+                  FileSaver.saveAs(meme, meme);
                 }}
               >
                 Download
