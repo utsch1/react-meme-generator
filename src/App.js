@@ -21,9 +21,12 @@ const backgroundText = css`
   position: absolute;
   z-index: 1;
   font-weight: bold;
-  font-size: 30px;
+  font-size: 27px;
   color: #d9e5d6;
   text-shadow: 2px 2px coral;
+  margin-top: 0;
+  margin-left: 12px;
+  margin-right: 12px;
 `;
 
 const divLayout = css`
@@ -109,7 +112,7 @@ function App() {
 
   return (
     <div css={background}>
-      <p css={backgroundText}>{'meme '.repeat(240)}</p>
+      <p css={backgroundText}>{' meme  '.repeat(465)}</p>
       <div css={divLayout}>
         <h1 css={headline}>MEME GENERATOR</h1>
         <div>
