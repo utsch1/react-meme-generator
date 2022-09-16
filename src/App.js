@@ -176,7 +176,7 @@ function App() {
         <div>
           <img
             data-test-id="meme-image"
-            src={meme.replace('?', '~q')}
+            src={meme}
             alt=""
             style={{
               maxWidth: '400px',
