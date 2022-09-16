@@ -11,19 +11,6 @@ const background = css`
   margin: 0;
   padding: 0;
   position: absolute;
-  z-index: 0;
-`;
-
-const backgroundText = css`
-  position: absolute;
-  z-index: 1;
-  font-weight: bold;
-  font-size: 27px;
-  color: #d9e5d6;
-  text-shadow: 2px 2px coral;
-  margin-top: 0;
-  margin-left: 12px;
-  margin-right: 12px;
 `;
 
 const divLayout = css`
@@ -36,7 +23,6 @@ const divLayout = css`
   justify-content: flex-start;
   align-items: center;
   position: relative;
-  z-index: 2;
 `;
 
 const headline = css`
@@ -104,7 +90,6 @@ function App() {
 
   return (
     <div css={background}>
-      <p css={backgroundText}>{'meme '.repeat(465)}</p>
       <div css={divLayout}>
         <h1 css={headline}>MEME GENERATOR</h1>
         <div>
@@ -191,7 +176,7 @@ function App() {
         <div>
           <img
             data-test-id="meme-image"
-            src={meme}
+            src={meme.replace('?', '~q')}
             alt=""
             style={{
               maxWidth: '400px',
