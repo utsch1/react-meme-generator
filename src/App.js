@@ -12,9 +12,6 @@ const background = css`
   padding: 0;
   position: absolute;
   z-index: 0;
-  @media screen and (max-width: 400px) {
-    background-color: #d9e5d6;
-  }
 `;
 
 const backgroundText = css`
@@ -40,10 +37,6 @@ const divLayout = css`
   align-items: center;
   position: relative;
   z-index: 2;
-
-  @media (max-width: 400px) {
-    width: 400px;
-  }
 `;
 
 const headline = css`
@@ -93,9 +86,8 @@ function App() {
   const [meme, setMeme] = useState(
     `https://api.memegen.link/images/noidea.png`,
   );
-  // const [item, setItem] = useState([]);
 
-  //fetch Data from API
+  // fetch Data from API
 
   useEffect(() => {
     const fetchData = async () => {
@@ -112,7 +104,7 @@ function App() {
 
   return (
     <div css={background}>
-      <p css={backgroundText}>{' meme  '.repeat(465)}</p>
+      <p css={backgroundText}>{'meme '.repeat(465)}</p>
       <div css={divLayout}>
         <h1 css={headline}>MEME GENERATOR</h1>
         <div>
@@ -207,18 +199,6 @@ function App() {
             }}
           />
         </div>
-
-        {/**Local Storage */}
-        {/* useEffect(() => {
-        localStorage.setItem('items', JSON.stringigy(meme), [items])
-      })
-
-      useEffect(() => {
-        const items = JSON.parse(localStorage.getItem('items'));
-        if (items) {
-        setItems(items)
-        }
-        }, []); */}
       </div>
     </div>
   );
